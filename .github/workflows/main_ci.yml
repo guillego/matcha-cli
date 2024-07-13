@@ -72,6 +72,9 @@ jobs:
         with:
           name: build-artifacts
 
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name: Build Linux binary
         run: pnpm exec pkg . --targets node20-linux-${{ matrix.arch }}
 
