@@ -73,11 +73,8 @@ jobs:
           name: build-artifacts
           path: dist/
 
-      - name: Display structure of downloaded files
-        run: ls -R
-
       - name: Build Linux binary
-        run: pnpm exec pkg . --targets node20-linux-${{ matrix.arch }}
+        run: pnpm exec pkg . --targets node16-linux-${{ matrix.arch }}
 
       - name: Upload Linux binary
         uses: actions/upload-artifact@v4
@@ -110,9 +107,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: dist/
 
       - name: Build macOS binary
-        run: pnpm exec pkg . --targets node20-macos-${{ matrix.arch }}
+        run: pnpm exec pkg . --targets node16-macos-${{ matrix.arch }}
 
       - name: Upload macOS binary
         uses: actions/upload-artifact@v4
@@ -145,9 +143,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: dist/
 
       - name: Build Windows binary
-        run: pnpm exec pkg . --targets node20-win-${{ matrix.arch }}
+        run: pnpm exec pkg . --targets node16-win-${{ matrix.arch }}
 
       - name: Upload Windows binary
         uses: actions/upload-artifact@v4
