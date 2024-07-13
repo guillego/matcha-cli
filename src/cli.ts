@@ -1,5 +1,5 @@
 import { Command } from "commander";
-
+import { getRandomNumber } from "./numbers";
 /**
  * Creates the main CLI program.
  * @returns {Command} The base CLI
@@ -21,7 +21,7 @@ function createCLI(version: string): Command {
  */
 export function setupCLI(version: string) {
   const cli = createCLI(version);
-  
+
   cli
     .command("greet [name]")
     .description("Greet someone by name")
@@ -39,6 +39,18 @@ export function setupCLI(version: string) {
       } else {
         console.log(`Hello, ${greeting}!`);
       }
+    });
+
+  cli
+    .command("lotto")
+    .description("Generate a random number for the lotto")
+    .option("--min <number>", "Minimum value", parseInt)
+    .option("--max <number>", "Maximum value", parseInt)
+    .action((options: any) => {
+      const min = options.min !== undefined ? options.min : 0;
+      const max = options.max !== undefined ? options.max : 10;
+      const randomNumber = getRandomNumber(min, max);
+      console.log(`Your random number is: ${randomNumber}`);
     });
 
   cli

@@ -30,4 +30,18 @@ describe('CLI', () => {
     const output = execCLI('bye');
     expect(output).toBe('Farewell, friend!');
   });
+
+  it('should generate a random number for lotto command', () => {
+    const output = execCLI('lotto');
+    const num = parseInt(output.split(': ')[1], 10);
+    expect(num).toBeGreaterThanOrEqual(0);
+    expect(num).toBeLessThanOrEqual(10);
+  });
+
+  it('should generate a random number with specified min and max for lotto command', () => {
+    const output = execCLI('lotto --min 5 --max 15');
+    const num = parseInt(output.split(': ')[1], 10);
+    expect(num).toBeGreaterThanOrEqual(5);
+    expect(num).toBeLessThanOrEqual(15);
+  });
 });
