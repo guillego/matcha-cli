@@ -4,31 +4,32 @@
   "description": "Matcha-ts: Simple learning-oriented typescript CLI",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && chmod +x dist/index.js && pkg ."
+    "test": "vitest",
+    "build": "tsc && chmod +x dist/src/index.js && pkg ."
   },
   "bin": {
-    "matcha": "dist/index.js"
+    "matcha": "dist/src/index.js"
   },
   "pkg": {
-    "scripts": "dist/**/*.js",
+    "scripts": "dist/src/**/*.js",
     "targets": [
       "node16-win-x64",
       "node16-mac-x64",
       "node16-linux-x64"
     ],
-     "outputPath": "bin"
+    "outputPath": "bin"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "commander": "^12.1.0",
-    "pkg": "^5.8.1",
-    "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   },
   "devDependencies": {
-    "@types/node": "^20.14.10"
+    "@types/node": "^20.14.10",
+    "pkg": "^5.8.1",
+    "ts-node": "^10.9.2",
+    "vitest": "^2.0.2"
   }
 }
