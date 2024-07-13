@@ -29,5 +29,5 @@ export function setupCLI(version: string) {
       console.log(`Howdy, ${name}!`);
     });
 
-    return cli
+  return cli;
 }
