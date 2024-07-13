@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -40,11 +40,11 @@ jobs:
         run: pnpm run test
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: |
-            dist/
+            dist/*
 
   build-linux:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
         arch: [x64, arm64]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -68,7 +68,7 @@ jobs:
         run: pnpm install
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build-artifacts
 
@@ -76,10 +76,10 @@ jobs:
         run: pnpm exec pkg . --targets node20-linux-${{ matrix.arch }}
 
       - name: Upload Linux binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: matcha-linux-${{ matrix.arch }}
-          path: bin/
+          path: bin/*
 
   build-macos:
     runs-on: macos-latest
@@ -89,7 +89,7 @@ jobs:
         arch: [x64, arm64]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -103,7 +103,7 @@ jobs:
         run: pnpm install
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build-artifacts
 
@@ -111,10 +111,10 @@ jobs:
         run: pnpm exec pkg . --targets node20-macos-${{ matrix.arch }}
 
       - name: Upload macOS binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: matcha-macos-${{ matrix.arch }}
-          path: bin/
+          path: bin/*
 
   build-windows:
     runs-on: windows-latest
@@ -124,7 +124,7 @@ jobs:
         arch: [x64, arm64]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -138,7 +138,7 @@ jobs:
         run: pnpm install
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build-artifacts
 
@@ -146,10 +146,10 @@ jobs:
         run: pnpm exec pkg . --targets node20-win-${{ matrix.arch }}
 
       - name: Upload Windows binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: matcha-windows-${{ matrix.arch }}
-          path: bin/
+          path: bin/*
 
   release:
     runs-on: ubuntu-latest
@@ -157,7 +157,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Download Linux binaries x64
         uses: actions/download-artifact@v2
@@ -165,29 +165,29 @@ jobs:
           name: matcha-linux-x64
           path: bin/
       - name: Download Linux binaries arm64
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: matcha-linux-arm64
           path: bin/
 
       - name: Download macOS binaries x64
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: matcha-macos-x64
           path: bin/
       - name: Download macOS binaries arm64
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: matcha-macos-arm64
           path: bin/
 
       - name: Download Windows binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: matcha-windows-x64
           path: bin/
       - name: Download Windows binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: matcha-windows-arm64
           path: bin/
