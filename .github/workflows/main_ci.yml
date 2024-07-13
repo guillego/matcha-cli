@@ -6,6 +6,12 @@ on:
       - main
     tags:
       - "v*.*.*"
+    paths:
+      - "src/**"
+      - "test/**"
+      - "package.json"
+      - "tsconfig.json"
+      - "vitest.config.json"
   pull_request:
     branches:
       - main
