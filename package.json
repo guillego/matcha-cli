@@ -1,7 +1,7 @@
 {
-  "name": "typescript-cli",
+  "name": "matcha",
   "version": "1.0.0",
-  "description": "Simple learning-oriented typescript CLI",
+  "description": "Matcha-ts: Simple learning-oriented typescript CLI",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
