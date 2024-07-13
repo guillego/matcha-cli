@@ -12,6 +12,9 @@ on:
   release:
     types: [created]
 
+permissions:
+  contents: write
+
 jobs:
   lint-test:
     runs-on: ubuntu-latest
