@@ -137,10 +137,7 @@ jobs:
           path: dist/src/
 
       - name: Build Windows binary
-        run: pnpm exec pkg . --targets node16-win-x64 --output /bin/matcha-windows-x64
-    
-      - name: Display structure of built files
-        run: ls -R
+        run: pnpm exec pkg . --targets node16-win-x64 --output bin/matcha-windows-x64
 
       - name: Upload Windows binary
         uses: actions/upload-artifact@v4
