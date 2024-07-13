@@ -44,7 +44,7 @@ jobs:
         with:
           name: build-artifacts
           path: |
-            dist/*
+            dist/src/*
 
   build-linux:
     runs-on: ubuntu-latest
@@ -61,20 +61,17 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install --only=dev
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
-          path: dist/
+          path: dist/src/
 
       - name: Build Linux binary
-        run: pnpm exec pkg . --targets node16-linux-${{ matrix.arch }}
+        run: npm exec pkg . --targets node16-linux-${{ matrix.arch }}
 
       - name: Upload Linux binary
         uses: actions/upload-artifact@v4
@@ -97,20 +94,17 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install --only=dev
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
-          path: dist/
+          path: dist/src/
 
       - name: Build macOS binary
-        run: pnpm exec pkg . --targets node16-macos-${{ matrix.arch }}
+        run: npm exec pkg . --targets node16-macos-${{ matrix.arch }}
 
       - name: Upload macOS binary
         uses: actions/upload-artifact@v4
@@ -121,9 +115,6 @@ jobs:
   build-windows:
     runs-on: windows-latest
     needs: lint-test
-    strategy:
-      matrix:
-        arch: [x64, arm64]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -133,25 +124,22 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install --only=dev
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
-          path: dist/
+          path: dist/src/
 
       - name: Build Windows binary
-        run: pnpm exec pkg . --targets node16-win-${{ matrix.arch }}
+        run: npm exec pkg . --targets node16-win-x64
 
       - name: Upload Windows binary
         uses: actions/upload-artifact@v4
         with:
-          name: matcha-windows-${{ matrix.arch }}
+          name: matcha-windows-x64
           path: bin/*
 
   release:
@@ -184,15 +172,10 @@ jobs:
           name: matcha-macos-arm64
           path: bin/
 
-      - name: Download Windows binaries
+      - name: Download Windows binaries x64
         uses: actions/download-artifact@v4
         with:
           name: matcha-windows-x64
-          path: bin/
-      - name: Download Windows binaries
-        uses: actions/download-artifact@v4
-        with:
-          name: matcha-windows-arm64
           path: bin/
 
       - name: Get version from package.json
@@ -209,5 +192,4 @@ jobs:
             bin/matcha-macos-x64
             bin/matcha-macos-arm64
             bin/matcha-windows-x64
-            bin/matcha-windows-arm64
         
