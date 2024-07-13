@@ -1,5 +1,12 @@
 # Matcha TS: A simple typescript CLI for learning purposes
 
+## Installation
+Download the latest release for your platform (macos, linux) and install it wherever you prefer, here is a simple bash script that does it for you (feel free to check the contents before, it's never a good idea to run a random script from the internet):
+```
+curl -s https://raw.githubusercontent.com/guillego/matcha-cli/main/install_matcha.sh | bash
+
+```
+
 ## Usage:
 Run the matcha command without arguments to get the help menu
 ```
