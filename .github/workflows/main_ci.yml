@@ -109,6 +109,12 @@ jobs:
       - name: Build macOS binary
         run: pnpm exec pkg . --targets node16-macos-x64,node16-macos-arm64 --output bin/matcha-macos
 
+      - name: Sign macOS binary
+        run: |
+          for file in bin/*; do
+            codesign --sign - --force --deep --timestamp "$file"
+          done
+
       - name: Upload macOS binary
         uses: actions/upload-artifact@v4
         with:
@@ -170,7 +176,7 @@ jobs:
         with:
           name: matcha-windows-x64
           path: bin/
-        
+
       - name: Display structure of downloaded files
         run: ls -R
 
@@ -184,4 +190,3 @@ jobs:
             bin/matcha-macos-x64
             bin/matcha-macos-arm64
             bin/matcha-windows-x64
-        
