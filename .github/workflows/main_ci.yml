@@ -71,7 +71,7 @@ jobs:
           path: dist/src/
 
       - name: Build Linux binary
-        run: pnpm exec pkg . --targets node16-linux-x64,node16-linux-arm64 --output matcha-linux
+        run: pnpm exec pkg . --targets node16-linux-x64,node16-linux-arm64 --output bin/matcha-linux
 
       - name: Display structure of built files
         run: ls -R
@@ -107,7 +107,7 @@ jobs:
           path: dist/src/
 
       - name: Build macOS binary
-        run: pnpm exec pkg . --targets node16-macos-x64,node16-macos-arm64 --output matcha-macos
+        run: pnpm exec pkg . --targets node16-macos-x64,node16-macos-arm64 --output bin/matcha-macos
     
       - name: Display structure of built files
         run: ls -R
@@ -143,7 +143,7 @@ jobs:
           path: dist/src/
 
       - name: Build Windows binary
-        run: pnpm exec pkg . --targets node16-win-x64
+        run: pnpm exec pkg . --targets node16-win-x64 --output /bin/matcha-windows-x64
 
       - name: Upload Windows binary
         uses: actions/upload-artifact@v4
@@ -181,7 +181,7 @@ jobs:
           name: matcha-macos-arm64
           path: bin/
 
-      - name: Download Windows binaries x64
+      - name: Download Windows binaries (x64 only)
         uses: actions/download-artifact@v4
         with:
           name: matcha-windows-x64
