@@ -1,6 +1,6 @@
 {
   "name": "matcha",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Matcha-ts: Simple learning-oriented typescript CLI",
   "main": "index.js",
   "scripts": {
