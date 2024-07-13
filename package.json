@@ -4,7 +4,8 @@
   "description": "Matcha-ts: Simple learning-oriented typescript CLI",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && chmod +x dist/src/index.js && pkg .",
+    "build": "tsc && chmod +x dist/src/index.js",
+    "compile": "tsc && chmod +x dist/src/index.js && pkg .",
     "test": "tsc && vitest run",
     "docs": "typedoc",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
