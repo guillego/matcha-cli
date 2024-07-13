@@ -16,12 +16,14 @@ Usage: matcha [options] [command]
 A simple CLI for learning TS
 
 Options:
-  -V, --version   output the version number
-  -h, --help      display help for command
+  -V, --version           output the version number
+  -h, --help              display help for command
 
 Commands:
-  greet <name>    Greet someone by name
-  help [command]  display help for command
+  greet [options] [name]  Greet someone by name
+  lotto [options]         Generate a random number for the lotto
+  bye                     Say goodbye
+  help [command]          display help for command 
 ```
 
 ## Building the CLI
