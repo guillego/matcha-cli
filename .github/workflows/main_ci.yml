@@ -1,0 +1,135 @@
+name: CI pipeline to lint, test, build and release code in main branch
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [created]
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint code
+        run: pnpm run lint
+
+      - name: Build code
+        run: pnpm run build
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: |
+            dist/
+            bin/
+
+  release:
+    runs-on: ubuntu-latest
+    needs: lint-test-build
+    if: github.event_name == 'release'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifacts
+          path: .
+
+      - name: Get version from package.json
+        id: get_version
+        run: echo "PACKAGE_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.PACKAGE_VERSION }}
+          release_name: Release ${{ env.PACKAGE_VERSION }}
+          draft: true
+          prerelease: true
+
+      - name: Upload Release Asset (Linux x64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/matcha-linux-x64
+          asset_name: matcha-linux-x64-16.14.0
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset (Linux arm64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/matcha-linux-arm64
+          asset_name: matcha-linux-arm64-16.14.0
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset (Mac x64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/matcha-macos-x64
+          asset_name: matcha-macos-x64-16.14.0
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset (Mac arm64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/matcha-macos-arm64
+          asset_name: matcha-macos-arm64-16.14.0
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset (Windows x64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/matcha-win-x64.exe
+          asset_name: matcha-win-x64-16.14.0.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset (Windows arm64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/matcha-win-arm64.exe
+          asset_name: matcha-win-arm64-16.14.0.exe
+          asset_content_type: application/octet-stream
