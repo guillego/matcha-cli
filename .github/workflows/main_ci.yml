@@ -76,6 +76,9 @@ jobs:
       - name: Build Linux binary
         run: pnpm exec pkg . --targets node16-linux-${{ matrix.arch }}
 
+      - name: Display structure of built files
+        run: ls -R
+
       - name: Upload Linux binary
         uses: actions/upload-artifact@v4
         with:
