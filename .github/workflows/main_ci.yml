@@ -189,4 +189,4 @@ jobs:
             bin/matcha-linux-arm64
             bin/matcha-macos-x64
             bin/matcha-macos-arm64
-            bin/matcha-windows-x64
+            bin/matcha-windows-x64.exe
