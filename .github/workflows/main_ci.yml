@@ -73,9 +73,6 @@ jobs:
       - name: Build Linux binary
         run: pnpm exec pkg . --targets node16-linux-x64,node16-linux-arm64 --output bin/matcha-linux
 
-      - name: Display structure of built files
-        run: ls -R
-
       - name: Upload Linux binary
         uses: actions/upload-artifact@v4
         with:
@@ -108,9 +105,6 @@ jobs:
 
       - name: Build macOS binary
         run: pnpm exec pkg . --targets node16-macos-x64,node16-macos-arm64 --output bin/matcha-macos
-    
-      - name: Display structure of built files
-        run: ls -R
 
       - name: Upload macOS binary
         uses: actions/upload-artifact@v4
