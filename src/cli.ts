@@ -1,5 +1,16 @@
 import { Command } from "commander";
 import { getRandomNumber } from "./numbers";
+
+interface GreetOptions {
+  cowboy?: boolean;
+  australian?: boolean;
+}
+
+interface LottoOptions {
+  min?: number;
+  max?: number;
+}
+
 /**
  * Creates the main CLI program.
  * @returns {Command} The base CLI
@@ -27,7 +38,7 @@ export function setupCLI(version: string) {
     .description("Greet someone by name")
     .option("--cowboy", "Greet with a cowboy style")
     .option("--australian", "Greet with an Australian style")
-    .action((name: string | undefined, options: any) => {
+    .action((name: string | undefined, options: GreetOptions) => {
       const greeting = name ? name : "pal";
 
       if (options.cowboy && options.australian) {
@@ -46,7 +57,7 @@ export function setupCLI(version: string) {
     .description("Generate a random number for the lotto")
     .option("--min <number>", "Minimum value", parseInt)
     .option("--max <number>", "Maximum value", parseInt)
-    .action((options: any) => {
+    .action((options: LottoOptions) => {
       const min = options.min !== undefined ? options.min : 0;
       const max = options.max !== undefined ? options.max : 10;
       const randomNumber = getRandomNumber(min, max);
